@@ -3,6 +3,9 @@ import * as dao from "./dao.js";
 let currentUser = null;
 export default function UserRoutes(app) {
     const createUser = async(req, res) => {
+        console.log("req.body")
+        console.log(req.body)
+        console.log(req.body.username)
         const result = dao.findUserByUsername(req.body.username)
         console.log("result is")
         console.log(result)
