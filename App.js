@@ -49,7 +49,6 @@ if (process.env.NODE_ENV !== "development") {
         maxAge: 6000 * 1000000
     };
 }
-app.set('trust proxy', 1)
 app.use(session(sessionOptions));
 app.use(express.json());
 app.use(function(req, res, next) {
