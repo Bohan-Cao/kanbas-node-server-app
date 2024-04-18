@@ -31,7 +31,7 @@ app.use(
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         maxAge: 60000 * 1000000,
         sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
