@@ -13,6 +13,7 @@ import session from "express-session";
 mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
+app.set('trust proxy', 1)
 let whitelist = [process.env.FRONTEND_URL]
     /** other domains if any */
 let corsOptions = {
@@ -49,6 +50,7 @@ if (process.env.NODE_ENV !== "development") {
         maxAge: 6000 * 1000000
     };
 }
+
 app.use(session(sessionOptions));
 app.use(express.json());
 app.use(function(req, res, next) {
