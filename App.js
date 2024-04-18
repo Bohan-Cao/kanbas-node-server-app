@@ -45,6 +45,7 @@ if (process.env.NODE_ENV !== "development") {
         domain: process.env.HTTP_SERVER_DOMAIN,
     };
 }
+app.set('trust proxy', 1)
 app.use(session(sessionOptions));
 app.use(express.json());
 app.use(function(req, res, next) {
