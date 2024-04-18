@@ -4,6 +4,8 @@ let currentUser = null;
 export default function UserRoutes(app) {
     const createUser = async(req, res) => {
         const result = dao.findUserByUsername(req.params.username)
+        console.log("result is")
+        console.log(result)
         if (result) {
             const result_new = {
                 code: 400,
