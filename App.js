@@ -52,13 +52,12 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-
-const port = process.env.PORT || 4000;
 Hello(app);
 ModuleRoutes(app);
 AssignmentRoutes(app);
 CourseRoutes(app);
 Lab5(app);
 UserRoutes(app);
-app.listen(port);
+app.listen(process.env.PORT || 4000, function() {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
