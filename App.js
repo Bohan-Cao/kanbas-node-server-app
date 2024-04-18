@@ -34,8 +34,8 @@ const sessionOptions = {
     saveUninitialized: false,
     cookie: {
         maxAge: 60000 * 1000000,
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-        secure: process.env.NODE_ENV === "production"
+        sameSite: 'none', // must be 'none' to enable cross-site delivery
+        secure: true
 
     },
     name: "kanbans"
@@ -43,8 +43,8 @@ const sessionOptions = {
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-        secure: process.env.NODE_ENV === "production",
+        sameSite: 'none', // must be 'none' to enable cross-site delivery
+        secure: true,
         domain: process.env.HTTP_SERVER_DOMAIN,
         maxAge: 6000 * 1000000
     };
