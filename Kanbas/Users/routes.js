@@ -3,8 +3,19 @@ import * as dao from "./dao.js";
 let currentUser = null;
 export default function UserRoutes(app) {
     const createUser = async(req, res) => {
-        const user = await dao.createUser(req.body);
-        res.json(user);
+        const result = dao.findUserByUsername(req.params.username)
+        if (result) {
+            const result_new = {
+                code: 400,
+                message: "username already exist!"
+            }
+            res.json(result_new)
+        } else {
+            const user = await dao.createUser(req.body);
+            console.log("req.body")
+            console.log(req.body)
+            res.json(user);
+        }
     };
 
     const deleteUser = async(req, res) => {
@@ -48,22 +59,35 @@ export default function UserRoutes(app) {
         const currentUser = await dao.findUserByCredentials(username, password);
         if (currentUser) {
             req.session["currentUser"] = currentUser;
+            console.log("req.session.user")
+            console.log(req.session.currentUser)
             res.json(currentUser);
         } else {
-            res.sendStatus(401);
+            const reuslt = {
+                code: 200,
+                message: "username is not exist,please check"
+            }
+            res.json(reuslt);
         }
     };
     const signout = (req, res) => {
-        req.session.destory();
-        res.setStatus(200);
+        req.session.destory;
+        res.sendStatus(200);
     };
     const profile = async(req, res) => {
         const currentUser = req.session["currentUser"];
+        console.log(req.session["currentUser"])
+        console.log("current user is =>")
+        console.log(currentUser)
         if (!currentUser) {
-            res.sendStatus(401);
-            return;
+            const result = {
+                code: 200,
+                message: "user info not work"
+            }
+            res.json(result);
+        } else {
+            res.json(currentUser);
         }
-        res.json(currentUser);
     };
     app.post("/api/users", createUser);
     app.get("/api/users", findAllUsers);

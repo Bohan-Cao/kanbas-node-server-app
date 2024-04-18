@@ -10,21 +10,33 @@ import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
 
-const CONNECTION_STRING =
-    process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kanbas";
 mongoose.connect(CONNECTION_STRING);
 
 const app = express();
+let whitelist = [process.env.FRONTEND_URL]
+    /** other domains if any */
+let corsOptions = {
+    credentials: true,
+    origin: function(origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
 app.use(
-    cors({
-        credential: true,
-        origin: process.env.FRONTEND_URL,
-    })
+    cors(corsOptions)
 );
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 60000
+    },
+    name: "kanba"
 };
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
@@ -36,6 +48,13 @@ if (process.env.NODE_ENV !== "development") {
 }
 app.use(session(sessionOptions));
 app.use(express.json());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
 const port = process.env.PORT || 4000;
 Hello(app);
 ModuleRoutes(app);

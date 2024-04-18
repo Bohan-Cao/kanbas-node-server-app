@@ -1,7 +1,9 @@
 import model from "./model.js";
 
 export const createUser = (user) => {
-    delete user._id
+    delete user._id;
+    console.log("user is =>")
+    console.log(user)
     return model.create(user);
 };
 export const findAllUsers = () => model.find();
