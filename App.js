@@ -26,6 +26,21 @@ let corsOptions = {
         }
     }
 }
+
+function logErrors(err, req, res, next) {
+    console.error(err.stack);
+    next(err);
+}
+
+function logErrors(err, req, res, next) {
+    console.error(err.stack);
+    next(err);
+}
+
+function errorHandler(err, req, res, next) {
+    res.status(500);
+    res.render('error', { error: err });
+}
 app.use(
     cors(corsOptions)
 );
@@ -52,6 +67,9 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 app.use(session(sessionOptions));
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 app.use(express.json());
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
