@@ -10,7 +10,7 @@ import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
 
-mongoose.connect(process.env.DB_CONNECTION_STRING);
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 let whitelist = [process.env.FRONTEND_URL]
