@@ -6,7 +6,7 @@ export default function UserRoutes(app) {
         console.log("req.body")
         console.log(req.body)
         console.log(req.body.username)
-        const result = dao.findUserByUsername(req.body.username)
+        const result = await dao.findUserByUsername(req.body.username)
         console.log("result is")
         console.log(result)
         if (result) {
