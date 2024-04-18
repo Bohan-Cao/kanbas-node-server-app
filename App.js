@@ -31,11 +31,11 @@ app.use(
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         maxAge: 60000
     },
-    name: "kanba"
+    name: "kanbans"
 };
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
