@@ -31,9 +31,9 @@ app.use(
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-        maxAge: 60000,
+        maxAge: 60000 * 1000000,
         secure: true
 
     },
